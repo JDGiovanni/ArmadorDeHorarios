@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scheduler - Armador de Horarios Académicos</title>
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo-container">
+            <h1>Scheduler</h1>
+            <span class="subtitle">Planificador Académico Inteligente</span>
+        </div>
+        <div class="global-metrics-banner">
+            <span id="header-total-materias">Materias: 0</span>
+            <span id="header-total-uc">UC Seleccionadas: 0 / 28</span>
+        </div>
+        <button id="btn-config-tope" class="btn secondary">Configurar Tope UC</button>
+    </header>
+    <main class="app-container">
+        <section class="panel catalogo-panel">
+            <h2>Catálogo Académico</h2>
+            
+            <div class="search-filters-bar">
+                <input type="text" id="input-buscar" placeholder="Buscar por nombre o código..." autocomplete="off">
+                <select id="select-filtro-trimestre">
+                    <option value="">Todos los trimestres</option>
+                    <option value="1">Trimestre 1</option>
+                    <option value="2">Trimestre 2</option>
+                    <option value="3">Trimestre 3</option>
+                    <option value="4">Trimestre 4</option>
+                    <option value="5">Trimestre 5</option>
+                    <option value="6">Trimestre 6</option>
+                    <option value="7">Trimestre 7</option>
+                    <option value="8">Trimestre 8</option>
+                    <option value="9">Trimestre 9</option>
+                </select>
+            </div>
+
+            <div class="acciones-trimestre-container">
+                <select id="select-trimestre-completo">
+                    <option value="">Seleccionar trimestre completo...</option>
+                    <option value="1">Agregar Trimestre 1</option>
+                    <option value="2">Agregar Trimestre 2</option>
+                    <option value="3">Agregar Trimestre 3</option>
+                    <option value="4">Agregar Trimestre 4</option>
+                    <option value="5">Agregar Trimestre 5</option>
+                    <option value="6">Agregar Trimestre 6</option>
+                    <option value="7">Agregar Trimestre 7</option>
+                    <option value="8">Agregar Trimestre 8</option>
+                    <option value="9">Agregar Trimestre 9</option>
+                </select>
+                <button id="btn-agregar-trimestre" class="btn primary">Agregar Trimestre</button>
+            </div>
+
+            <div id="lista-catalogo" class="scroll-container">
+            </div>
+        </section>
+        <section class="panel seleccion-panel">
+            <div class="panel-header-action">
+                <h2>Materias Seleccionadas</h2>
+                <button id="btn-abrir-modal-manual" class="btn accent">+ Registrar Materia Manual</button>
+            </div>
+
+            <div id="lista-seleccionadas" class="scroll-container">
+            </div>
+
+            <div class="generador-acciones">
+                <div id="incompatibilidades-alert" class="alert-box hidden"></div>
+                <button id="btn-generar-horarios" class="btn success large">Generar Horarios Válidos</button>
+            </div>
+        </section>
+        <section class="panel resultados-panel">
+            <h2>Resultados y Horario</h2>
+            <div class="preferencias-container">
+                <div class="filtros-preferencias">
+                    <h4>Filtros de Preferencias</h4>
+                    <div class="dias-libres-checkboxes">
+                        <label><input type="checkbox" name="dia-libre" value="LUN"> Lunes libre</label>
+                        <label><input type="checkbox" name="dia-libre" value="MAR"> Martes libre</label>
+                        <label><input type="checkbox" name="dia-libre" value="MIE"> Miércoles libre</label>
+                        <label><input type="checkbox" name="dia-libre" value="JUE"> Jueves libre</label>
+                        <label><input type="checkbox" name="dia-libre" value="VIE"> Viernes libre</label>
+                        <label><input type="checkbox" name="dia-libre" value="SAB"> Sábado libre</label>
+                    </div>
+                    <div class="horas-limite">
+                        <div>
+                            <label for="input-hora-min">Entrada mín:</label>
+                            <input type="time" id="input-hora-min" value="07:00">
+                        </div>
+                        <div>
+                            <label for="input-hora-max">Salida máx:</label>
+                            <input type="time" id="input-hora-max" value="21:00">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ordenamiento-preferencias">
+                    <label for="select-ordenar">Ordenar por:</label>
+                    <select id="select-ordenar">
+                        <option value="asistencia">Menos días de asistencia</option>
+                        <option value="muertas">Menos horas muertas</option>
+                        <option value="salida">Salida más temprana</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="navegacion-resultados" class="navegacion-resultados hidden">
+                <button id="btn-prev-horario" class="btn secondary">&larr; Anterior</button>
+                <span id="info-paginacion-horarios">Opción 0 de 0</span>
+                <button id="btn-next-horario" class="btn secondary">Siguiente &rarr;</button>
+                <button id="btn-fijar-definitivo" class="btn primary">Elegir como Horario Definitivo</button>
+            </div>
+
+            <div id="metricas-resultado" class="metricas-box hidden">
+            </div>
+            <div id="rejilla-semanal" class="rejilla-container">
+                <p class="placeholder-text">Genera o filtra horarios para visualizar la rejilla semanal.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <section id="seccion-resumen" class="resumen-section hidden">
+        <h2>Horario Definitivo Seleccionado</h2>
+        <div id="detalle-resumen-tabla"></div>
+        <div class="resumen-acciones">
+            <button id="btn-imprimir" class="btn primary">Imprimir / Guardar PDF</button>
+            <button id="btn-cambiar-horario" class="btn secondary">Elegir otro horario</button>
+        </div>
+    </section>
+
+    <div id="modal-manual" class="modal hidden">
+        <div class="modal-content">
+            <span id="cerrar-modal-manual" class="close-btn">&times;</span>
+            <h3>Registrar Materia Manual</h3>
+            <form id="form-materia-manual">
+                <div class="form-group">
+                    <label for="manual-codigo">Código:</label>
+                    <input type="text" id="manual-codigo" required placeholder="Ej: MAT-101">
+                </div>
+                <div class="form-group">
+                    <label for="manual-nombre">Nombre:</label>
+                    <input type="text" id="manual-nombre" required placeholder="Ej: Cálculo Avanzado">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="manual-trimestre">Trimestre:</label>
+                        <input type="number" id="manual-trimestre" min="1" max="9" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="manual-uc">Unidades de Crédito (1-5):</label>
+                        <input type="number" id="manual-uc" min="1" max="5" value="3" required>
+                    </div>
+                </div>
+
+                <div class="secciones-container-form">
+                    <h4>Secciones y Horarios</h4>
+                    <div id="lista-secciones-form">
+                    </div>
+                    <button type="button" id="btn-agregar-seccion-form" class="btn secondary">+ Agregar Sección</button>
+                </div>
+
+                <div id="form-errores" class="form-errores-box"></div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn success">Guardar Materia</button>
+                    <button type="button" id="btn-cancelar-manual" class="btn secondary">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-tope" class="modal hidden">
+        <div class="modal-content small">
+            <h3>Configurar Tope de Unidades de Crédito</h3>
+            <label for="input-nuevo-tope">Tope máximo actual:</label>
+            <input type="number" id="input-nuevo-tope" min="1" value="28">
+            <div id="error-tope" class="error-text"></div>
+            <div class="form-actions">
+                <button id="btn-guardar-tope" class="btn primary">Guardar</button>
+                <button id="btn-cancelar-tope" class="btn secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
