@@ -5,7 +5,7 @@
 - Nombres de los dos integrantes y división del trabajo realizado.
   - José D'Giovanni
   -   Trabajo:
-  -   Archivo Index.html
+    -- Archivo Index.html
   - Andrés Vivas
   -   Trabajo:
   
