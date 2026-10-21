@@ -8,6 +8,7 @@
     - Archivo Index.html
   - Andrés Vivas
   -   Trabajo:
+    - Archivo styles.css
   
   - Instrucciones para ejecutar el proyecto.
   - Descripción de los criterios de ordenamiento y de las métricas mostradas.
