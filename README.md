@@ -5,10 +5,10 @@
 - Nombres de los dos integrantes y división del trabajo realizado.
   - José D'Giovanni
   -   Trabajo:
-    - Archivo Index.html, datos.js, catalogo.js, app.js
+    - Archivo Index.html, bloques.js, materias.js datos.js, catalogo.js, app.js, generador.js, preferencias.js
   - Andrés Vivas
   -   Trabajo:
-    - Archivo styles.css
+    - Archivo styles.css, choques.js, formulario.js, rejilla.js, resumen.js, seleccion.js, tiempo.js
   
   - Instrucciones para ejecutar el proyecto.
   - Descripción de los criterios de ordenamiento y de las métricas mostradas.
